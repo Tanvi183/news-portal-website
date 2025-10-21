@@ -1,18 +1,31 @@
 import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
+import CategoryNews from "../pages/CategoryNews";
+import Home from "../pages/Home";
 
 const router = createBrowserRouter([
     {
         path : "/",
         Component: HomeLayout,
+        children : [
+            {
+                path : "",
+                Component : Home,
+            },
+            {
+                path : "/category/:id",
+                Component : CategoryNews,
+                loader : ()=> fetch("/news.json"),
+            },
+        ]
     },
     {
-        path: "/auth",
-        element: <h2>Authentication Layout</h2>,
+        path: "/about",
+        element: <h2>About Page</h2>,
     },
     {
-        path: "/news",
-        element: <h2>News Layout</h2>,
+        path: "/career",
+        element: <h2>career pages</h2>,
     },
     {
         path: "/*",
