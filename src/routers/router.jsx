@@ -9,22 +9,23 @@ import Register from "../pages/Register";
 const router = createBrowserRouter([
     {
         path : "/",
-        Component: HomeLayout,
+        element: <HomeLayout></HomeLayout>,
         children : [
             {
                 path : "",
-                Component : Home,
+                element: <Home></Home>,
             },
             {
-                path : "/category/:id",
-                Component : CategoryNews,
-                loader : ()=> fetch("/news.json"),
+                path: "/category/:id",
+                element: <CategoryNews></CategoryNews>,
+                loader: () => fetch("/news.json"),
             },
         ]
     },
+
     {
         path : "/auth",
-        Component : AuthLayout,
+        element : <AuthLayout></AuthLayout>,
         children : [
             {
                 path: "/auth/login",
@@ -35,7 +36,8 @@ const router = createBrowserRouter([
                 element: <Register></Register>,
             },
         ]
-    },  
+    }, 
+     
     {
         path: "/about",
         element: <h2>About Page</h2>,
