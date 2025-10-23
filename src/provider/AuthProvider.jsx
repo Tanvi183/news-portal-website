@@ -4,6 +4,8 @@ import {
     createUserWithEmailAndPassword,
     getAuth,
     onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
 } from "firebase/auth";
 
 // setp : 1 create context
@@ -16,12 +18,19 @@ const AuthProvider = ({ children }) => {
 
     console.log(user);
 
+    // User Registation function
     const createUser = (email, password) => {
         return  createUserWithEmailAndPassword(auth, email, password)
     }
 
+    // User login Function
+    const signIn = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
+    };
+
+    // To store user data when logged in
     useEffect(() =>{
-        const unSubscribe = onAuthStateChanged(auth,(currentUser)=>{
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
             setUser(currentUser)
         });
         return ()=> {
@@ -29,10 +38,18 @@ const AuthProvider = ({ children }) => {
         }
     },[])
 
+
+    // Logout
+    const logOut = () => {
+        return signOut(auth);
+    };
+
     const authData = {
         user,
         setUser,
         createUser,
+        signIn,
+        logOut,
     };
 
     // step : 2 return the created context
