@@ -15,23 +15,27 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    console.log(user);
+    console.log(user, loading);
 
     // User Registation function
     const createUser = (email, password) => {
+        setLoading(true);
         return  createUserWithEmailAndPassword(auth, email, password)
     }
 
     // User login Function
     const signIn = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
     // To store user data when logged in
     useEffect(() =>{
         const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
-            setUser(currentUser)
+            setUser(currentUser);
+            setLoading(false);
         });
         return ()=> {
             unSubscribe();
@@ -50,6 +54,8 @@ const AuthProvider = ({ children }) => {
         createUser,
         signIn,
         logOut,
+        loading,
+        setLoading,
     };
 
     // step : 2 return the created context
